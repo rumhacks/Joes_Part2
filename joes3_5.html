@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Checkout App</title>
+<body>
+<div id="itemSelect"> Items to Select: 
+    <script> 
+    /*const items = {
+        "Apple": 0,
+        "Banana": 0,
+        "Strawberry": 0,
+        "Milk": 0,
+        "Eggs": 0,
+        "Coffee": 0,
+        "Cereal": 0,
+        "Cabbage": 0,
+        "Soda": 0,
+    };*/
+
+    items = {
+        "Apple": {quantity: 0, price: 1.00},
+        "Banana": {quantity: 0, price: 1.00},
+        "Strawberry": {quantity: 0, price: 1.00},
+        "Milk": {quantity: 0, price: 1.00},
+        "Eggs": {quantity: 0, price: 1.00},
+        "Coffee": {quantity: 0, price: 1.00},
+        "Cereal": {quantity: 0, price: 1.00},
+        "Cabbage": {quantity: 0, price: 1.00},
+        "Soda": {quantity: 0, price: 1.00},
+    };
+
+    //strItems = JSON.stringify(items);
+
+    for (keys in items) {
+            document.write(keys + ", ");
+        }
+    </script>
+</div>
+<br>
+<form>
+    <label for="itemName">Item Name: </label>
+    <input type="text" id="itemName" name="itemName"><br><br>
+    <button type="button" onclick="storeInput()">Add to Cart</button>
+</form>
+
+<br>   
+
+<div id="shopCart">Shopping Cart Area</div>
+
+<button type="button" onclick="checkCart()">Checkout</button>
+
+<script>
+    
+    const displayItems = [];
+    //take input
+    function storeInput () {
+        item1 = document.getElementById("itemName").value;
+        item1 = item1.charAt(0).toUpperCase() + item1.slice(1);
+        if (item1 != ""){
+            if (item1 in items) {
+                items[item1].quantity += 1;
+                console.log(items);
+                displayCart();
+            }
+
+        document.getElementById("itemName").value = "";
+        }
+        
+        else {
+            alert("Please enter a item");
+        }
+        
+
+    }
+
+    //show the cart items
+    function displayCart () {
+        let shopCart = document.getElementById("shopCart");
+        shopCart.innerHTML = "";
+        let totalPrice = 0; 
+        for (let item in items) {
+            const { quantity, price } = items[item];
+            const itemTotalPrice = quantity * price;
+            if (quantity>0){
+                shopCart.innerHTML += "<p>" + item + ": " + quantity + " (Price: $" + itemTotalPrice.toFixed(2) + ")</p>";
+                displayItems.push(item);
+                totalPrice += itemTotalPrice;
+
+            }
+           
+        }
+        shopCart.dataset.totalPrice = totalPrice.toFixed(2);
+
+
+    }
+
+    //checkout popup logic
+    function checkCart () {
+        displayCart();
+        const shopCart = document.getElementById("shopCart");
+        const totalPrice = shopCart.dataset.totalPrice;
+        shopCart.innerHTML += "Total Price: $" + totalPrice;
+        alert(shopCart.innerText);
+        
+
+    }
+    /*function checkCart () {
+        for (const item in items) {
+            if (items[item]>0 && !displayItems.includes(item)){
+                alert(item);
+
+            }
+        
+    }*/
+
+
+</script>
+
+<!-- <script>
+    items = {
+        "hotdogs" : 4,
+        "fries" : 3.50,
+        "soda" : 1.50,
+        "sauerkraut" : 1
+    }
+    strItems = JSON.stringify(items);
+    document.write(strItems);
+    
+</script> -->
+
+<script>
+    /*function Food (foodItems, prices){
+        this.foodItems = foodItems;
+        this.prices = prices;
+        this.show = function () {return this.foodItems + ": $" + this.prices;}
+    }
+
+    foods = [new Food("hotdogs", 4), new Food("fries", 3.50), new Food("soda", 1.50), new Food("sauerkraut", 1)]
+    menu=foods.map(i=>i.show()).join("<br>");
+    document.write(menu);*/
+
+</script>
+</body>
+</head>
+</html>
